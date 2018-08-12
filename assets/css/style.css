@@ -1,0 +1,15 @@
+
+body {
+  padding-top: 54px;
+}
+
+#add-tag,
+{
+  margin-top: 5px;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
