@@ -1,2 +1,2 @@
 # find-a-gif
-Gif Search UI - giphy.com search client 
+Gif Search UI - "giphy.com" client 
