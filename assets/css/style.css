@@ -2,10 +2,28 @@
 body {
   padding-top: 54px;
 }
+.navbar-brand {
+  font-size: 22px;
+}
+.top-container {
+  padding-left: 0px; 
+}
+.container {
+  margin-left: 5px;
+}
+
+#tag-srch-div {
+  margin-top: 5px;
+  padding-top: 15px;
+}
+#tag-srch-div h1{
+  font-size: 18px;
+}
 
 #add-tag,
 {
   margin-top: 5px;
+  padding: 3px;
 }
 
 @media (min-width: 992px) {
