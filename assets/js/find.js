@@ -29,7 +29,7 @@ function renderButtons() {
 }
 
 function Cards(resp) {
-    console.log(resp);
+    //console.log(resp);
     // storing the data from the AJAX request in the results variable
     var results = resp.data;
 
@@ -63,14 +63,15 @@ function Cards(resp) {
 
 // Generic function for capturing the name from the data-attribute
 function renderCards(tg) {
-    let tagName; 
-    if (tg){
+    var tagName;
+    if (typeof tg === 'string') {
         tagName = tg;
-    }else{
+        console.log("if tag: " + typeof(tg) + tg)
+    } else {
         tagName = $(this).attr("data-name");
-    }
-    console.log(tagName);
+        console.log("else tag: " + tagName)
 
+    }
     // Constructing a queryURL using the animal name
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
     tagName + "&api_key=dc6zaTOxFJmzC&limit=" + rlimit;
@@ -101,10 +102,13 @@ function changeState(){
           $(this).attr("data-state", "still");
         }    
 }
+
 function renderInitial(){
     let ki = Math.floor(Math.random() * topics.length);  
+    console.log("topic: " + topics[ki]);
     renderCards(topics[ki]);// display random gifs from topics
 }
+
 $(document).ready(function () {
     $("#addtag").click(function (e) {
         e.preventDefault();
