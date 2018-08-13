@@ -2,27 +2,27 @@
 globals
 */
 
-// Initial array of gtags
-var search_tags = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
+// Initial array of topics
+var topics = ["georgia","football","movies", "food", "cats", "sports","fun"];
+var rlimit = 10; //rate limit
 
 // Function for displaying movie data
 function renderButtons() {
-
     // Deleting the gtags prior to adding new gtags
     // (this is necessary otherwise we will have repeat buttons)
     $("#buttons-view").empty();
 
     // Looping through the array of gtags
-    for (var i = 0; i < search_tags.length; i++) {
+    for (var i = 0; i < topics.length; i++) {
         // Then dynamicaly generating buttons for each movie in the array
         // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
         var a = $("<button>");
         // Adding a class of movie to our button
         a.addClass("tag");
         // Adding a data-attribute
-        a.attr("data-name", search_tags[i]);
+        a.attr("data-name", topics[i]);
         // Providing the initial button text
-        a.text(search_tags[i]);
+        a.text(topics[i]);
         // Adding the button to the HTML
         $("#buttons-view").append(a);
     }
@@ -36,8 +36,8 @@ function Cards(resp) {
     // Looping through each result item
     for (var i = 0; i < results.length; i++) {
         // Creating and storing a div tag
-        let gifDiv = $("<div class='col-lg-4 col-md-6 mb-4'>");
-        let gifCard = $("<div class='card h-100'>");
+        let gifDiv = $("<div class='gifwrap'>");
+        let gifCard = $("<div class='gifdiv Card h-100'>");
 
         // Creating a paragraph tag with the result item's rating
         var p = $("<p>").text("Rating: " + results[i].rating);
@@ -45,9 +45,9 @@ function Cards(resp) {
         // Creating and storing an image tag
         let gifImage = $("<img class='gif img-fluid img-thumbnail'>");
         // Setting the src attribute of the image to a property pulled off the result item
-        gifImage.attr("src", results[i].images.fixed_height_still.url);
-        gifImage.attr("data-still", results[i].images.fixed_height_still.url);
-        gifImage.attr("data-animate", results[i].images.fixed_height.url);
+        gifImage.attr("src", results[i].images.fixed_width_still.url);
+        gifImage.attr("data-still", results[i].images.fixed_width_still.url);
+        gifImage.attr("data-animate", results[i].images.fixed_width.url);
         gifImage.attr("data-state","still");
         gifImage.attr("alt", "Test Alt");
 
@@ -62,24 +62,29 @@ function Cards(resp) {
 }
 
 // Generic function for capturing the name from the data-attribute
-function renderCards() {
-    var tagName = $(this).attr("data-name");
+function renderCards(tg) {
+    let tagName; 
+    if (tg){
+        tagName = tg;
+    }else{
+        tagName = $(this).attr("data-name");
+    }
     console.log(tagName);
 
     // Constructing a queryURL using the animal name
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-    tagName + "&api_key=dc6zaTOxFJmzC&limit=10";
+    tagName + "&api_key=dc6zaTOxFJmzC&limit=" + rlimit;
 
     // Performing an AJAX request with the queryURL
     $.ajax({
         url: queryURL,
         method: "GET"
     })
-        // After data comes back from the request
-        .then(function (response) {
-            console.log(queryURL);
-            Cards(response);
-        });
+    // After data comes back from the request
+    .then(function (response) {
+        console.log(queryURL);
+        Cards(response);
+    });
 }
 
 function changeState(){
@@ -96,7 +101,10 @@ function changeState(){
           $(this).attr("data-state", "still");
         }    
 }
-
+function renderInitial(){
+    let ki = Math.floor(Math.random() * topics.length);  
+    renderCards(topics[ki]);// display random gifs from topics
+}
 $(document).ready(function () {
     $("#addtag").click(function (e) {
         e.preventDefault();
@@ -107,7 +115,7 @@ $(document).ready(function () {
         var tag = $("#tag-input").val().trim();
 
         // Adding the movie from the textbox to our array
-        search_tags.push(tag);
+        topics.push(tag);
 
         // Calling renderButtons which handles the processing of our movie array
         renderButtons();
@@ -123,3 +131,4 @@ $(document).on("click",".gif", changeState);
 
 // Calling the renderButtons function to display the intial buttons
 $(document).ready(renderButtons);
+$(document).ready(renderInitial); // display random gifs from topics

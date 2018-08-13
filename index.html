@@ -33,16 +33,16 @@
     <div class="container">
         <div class="row">
           <div class="col-lg-3" id="tag-srch-div">
-              <h1>Search :</h1>
-
-              <form id="tag-form">
-                  <label for="tag-input">Search Tag</label>
-                  <input type="text" id="tag-input">
+              <h1>Topic Search</h1>
+             <!-- <form id="tag-form"> -->
+                  <div class="input-group custom-search-form">
+                      <input type="text" id="tag-input" class="form-control" placeholder="new topic here...">
+                      <input id="addtag" class="btn-default" type="submit" value=" + ">
+                  </div>
                   <!-- Button triggers new movie to be added -->
-                  <input id="addtag" type="submit" value="Add Tag">
 
-                </form>
-                <span>Quick Search</span>
+                <!-- </form> -->
+                <div class="divider"></div>
                 <div id="buttons-view"></div>
           </div>
 
@@ -55,6 +55,7 @@
           </div>
 
               <div class="row" id="gifs-appear-here">
+
 <!--
               <div class="col-lg-4 col-md-6 mb-4">
                   <div class="card h-100">
